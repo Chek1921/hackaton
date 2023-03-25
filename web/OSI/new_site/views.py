@@ -159,19 +159,19 @@ def report_cmplt(request,rep_id):
     else:
         return redirect('index')
 
-class CreateUserRating(ListView):
-    model = UserRating
-    template_name = 'new_site/diashboards.html'
 
-    def my_view(request):
-        model = UserRating.objects.get(pk=1)
-        data = json.dumps({
-            "all_rating" : UserRating.all_rating,
-            "count_raiting" : UserRating.count_raiting,
-            "rating" : UserRating.rating,
-        })
-        return JsonResponse(data, safe=False)
-    
-    def my_call(request):
-        if request.method == 'POST':
-            width = int(request.Post.get())
+# def my_request(request):
+#     model = UserRating.objects.get(pk=1)
+#     data = json.dumps({
+#         "all_rating" : UserRating.all_rating,
+#         "count_raiting" : UserRating.count_raiting,
+#         "rating" : UserRating.rating,
+#     })
+#     return JsonResponse(data, safe=False)
+
+# def my_call(request):
+#     if request.method == 'POST':
+#         width = int(request.Post.get('width', 400))
+#         height = int(request.POST.get('height', 300))
+#         color = request.POST.get('color', 'red')
+#         image 
