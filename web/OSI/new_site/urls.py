@@ -22,6 +22,7 @@ urlpatterns = [
     path('reg/', views.RegView.as_view(), name='reg'),
     path('login/', views.LogView.as_view(), name='login'),
     path('logout/', views.logout_l, name='logout'),
+    path('dashboards/', views.dashboards, name='dashboards'),
     path('work/create', views.CreateWorkType.as_view(), name = 'work_create'),
     path('rep1', views.ReportStage1.as_view(), name = 'rep1'),
     path('rep2', views.ReportStage2.as_view(), name = 'rep2'),
@@ -33,4 +34,5 @@ urlpatterns = [
 
 
     path('api/telegram/message/get', api_views.ReportApiList.as_view()),
+    path('api/telegram/rating/', api_views.RatingApi.as_view()),
 ]   

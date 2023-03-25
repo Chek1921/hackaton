@@ -1,12 +1,37 @@
-from .models import Report
+from .models import Report, UserRating
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from .serializers import *
 
 class ReportApiList(generics.ListCreateAPIView):
-    queryset = Report.objects.all()
     serializer_class = ReportSerializer
 
-# def reportCreate(request):
+    def get_queryset(self):
+        queryset = Report.objects.all()
+        userId = self.request.query_params.get('userId', None)
+        print(userId)
+        if userId is not None:
+            queryset = queryset.filter(userId=userId)
+        return queryset
+    
+class RatingApi(APIView):
+    def post(self, request):
+        data = request.data
+        print(request.data)
+        rating = int(data['rating'])
+        reportId = int(data['reportId'])
+        user = Report.objects.get(id = reportId).whos
+        rating_field = UserRating.objects.get(user = user)
+        rating_field.all_rating = rating_field.all_rating+rating
+        rating_field.count_raiting = rating_field.count_raiting+1
+        print(rating_field.all_rating, rating_field.count_raiting)
+        rating_field.save()
+        return Response({'title': 'OK'})
+
+    
+    
+#     def reportCreate(request):
 #     if request.method == 'POST':
 #         try:
 #             data = json.loads(request.body.decode('utf-8'))

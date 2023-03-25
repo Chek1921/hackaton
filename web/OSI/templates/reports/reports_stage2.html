@@ -16,10 +16,11 @@
                     {%endif%}
                 {%endfor%}
                 " role="alert">
-                    <h4 class="alert-heading">{{ el.address }}</h4>
-                    <p>{{ el.message|linebreaks }}</p>
-                    <p>{{ el.time_factor }}</p>
-                    <p>{{ el.date }}</p>
+                    <h4 class="alert-heading">Адресс: {{ el.address }}</h4>
+                    <p>Проблема {{ el.message|linebreaks }}</p>
+                    <p>Срочность {{ el.time_factor }}</p>
+                    <p>Дата создания {{ el.date }}</p>
+                    <p>Цена {{ el.cost }} тг</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <a href="{% url 'rep_to_me' el.pk %}" class = 'btn btn-primary'>Принять</a>
                     </div>

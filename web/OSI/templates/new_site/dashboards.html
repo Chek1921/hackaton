@@ -1,0 +1,57 @@
+{%extends 'page.html'%}
+
+{% block content %}
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+	<div class="container">
+		<label>
+			{{user}} ,вот ваш рейтинг
+		</label>
+	</div>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript"> 
+            window.onload = function () {
+                var chart = new CanvasJS.Chart("chartContainer", {
+	            animationEnabled: true,
+	            exportEnabled: true,
+                theme:"light1",
+	            title:{
+		            text: "Simple Column Chart with Index Labels"
+	            },
+  	            axisY: {
+                includeZero: true
+                },
+	            data: [{
+		        type: "column", //change type to bar, line, area, pie, etc
+		        //indexLabel: "{y}", //Shows y value on all Data Points
+		        indexLabelFontColor: "#03c03c",
+      	        indexLabelFontSize: 16,
+		        indexLabelPlacement: "outside",
+		        dataPoints: [
+			        { x: 10, y: 70 },
+			        { x: 20, y: 55 },
+			        { x: 30, y: 50 },
+			        { x: 40, y: 65 },
+			        { x: 50, y: 92, indexLabel: "\u2605 Высшее" },
+			        { x: 60, y: 68 },
+			        { x: 70, y: 38 },
+			        { x: 80, y: 71 },
+			        { x: 90, y: 54 },
+			        { x: 100, y: 60 },
+			        { x: 110, y: 36 },
+			        { x: 120, y: 49 },
+			        { x: 130, y: 21, indexLabel: "\u2691 Низжшее" }
+		        ]
+	        }]
+        });
+		$.ajax({
+		url: '/my_view/',
+		success:function (data){
+			var UserRating = JSON.parse(data);
+		}
+			});
+            chart.render();
+
+                                    }
+    </script>
+
+{% endblock content %}

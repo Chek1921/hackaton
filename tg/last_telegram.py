@@ -1,12 +1,19 @@
 from aiogram import types, executor, Dispatcher, Bot
 import requests
 import re
+import ast
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters import Text
+import asyncio
+from websockets import connect
+import json
+from aiogram.utils import exceptions as tg_exceptions
+import websockets
 
 from api import main_api
 from handlers import states
-from keyboards import beginBot, inputType, inlineChoice, emptyKeyboard
+from keyboards import beginBot, inputType, inlineChoice, emptyKeyboard, ratingReply
 
 
 TOKEN = "6220388571:AAHYi2TR5B4-EPH1Jw_f6VINoJBJAK6JQrY"
@@ -18,6 +25,38 @@ storage = MemoryStorage()
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
 
+##########################
+
+async def send_message_to_django(message):
+    async with connect('wss://26.76.95.107:8000/wss') as websocket:
+        data = {'message': message}
+        await websocket.send(json.dumps(data))
+        # response = await websocket.recv()
+        # response_data = json.loads(response)
+        # return response_data
+
+async def receive_message(message):
+    try:
+        await bot.send_message(chat_id=message.chat.id, text=message)
+    except tg_exceptions.ChatNotFound:
+        print('Chat not found')
+
+async def websocket_handler():
+    async with websockets.connect('ws://26.76.95.107:8000/ws') as websocket:
+        while True:
+            message = await websocket.recv()
+            await receive_message(message)
+
+
+async def start_bot():
+    await dp.start_polling()
+
+async def start():
+    await asyncio.gather(start_bot(), websocket_handler())
+
+
+
+##########################
 
 @dp.message_handler(commands=['start'])
 async def begin(message: types.Message):
@@ -86,12 +125,31 @@ async def addressManual(message: types.Message, state: FSMContext):
     await message.reply('Спасибо, ожидайте!', reply_markup=beginBot)
     await state.finish()
 
-
-@dp.message_handler(commands=['Список_ваших_жалоб'])
+@dp.message_handler(commands=['Список_жалоб'])
 async def createReport(message: types.Message):
-    await message.answer('Жалобы будут позже')
+    messages = main_api.get_data(message.from_user.id)
+    for user_message in messages:
+        await message.answer(user_message)
+
+answers = dict()
+
+@dp.callback_query_handler(Text(startswith='rate'))
+async def createRating(callback : types.CallbackQuery):
+    res = int(callback.data.split('_')[1])
+    id = callback.data.split('_')[2]
+    answers = ast.literal_eval(open("answers.txt","r").read())
+    if id not in answers:
+        await callback.answer('Вы успешно поставили оценку')        
+        answers[id] = res
+        open("answers.txt","w").write(str(answers))
+        main_api.post_rating(res, id)
+    else:
+        await callback.answer('Вы уже оценивали эту услугу', show_alert=True)
+    print(answers)
+    
+
 
 
 
 if __name__ == '__main__':
-    executor.start_polling(dp)
+    asyncio.run(start())

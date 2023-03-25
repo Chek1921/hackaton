@@ -7,8 +7,14 @@ from django.contrib.auth import login, logout
 from django.views.generic.list import ListView
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .consumers import YourConsumer
+from django.http import JsonResponse
+import json
 
 # Create your views here.
+def dashboards(request):
+    return render(request, 'new_site/dashboards.html', {'title':'Мой Рейтинг'})
+
 def index(request):
     return render(request, 'new_site/index.html', {'title' : 'Главная'})
 
@@ -66,6 +72,7 @@ class ReportStage1(LoginRequiredMixin,ListView):
             report = Report.objects.get(pk = form_data['el_pk'])
             report.time_factor = TimeFactor.objects.get(pk = form_data['time_factor'])
             report.work_type = WorkType.objects.get(pk = form_data['work_type'])
+            report.cost = form_data['cost']
             report.stage = Stage.objects.get(id = 2)
             report.save()
             return redirect('rep1')
@@ -83,14 +90,11 @@ class ReportStage2(LoginRequiredMixin,ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Жалобы'
         context['time_factors'] = TimeFactor.objects.all()
-        context.update({
-            
-        })
         return context
     
     def get_queryset(self):
         reports_1 = Report.objects.filter(time_factor_id = 1, stage_id = 2, work_type_id = self.request.user.work_type_id)
-        reports_2 = Report.objects.filter(time_factor_id = 2, work_type_id = self.request.user.work_type_id)
+        reports_2 = Report.objects.filter(time_factor_id = 2, stage_id = 2, work_type_id = self.request.user.work_type_id)
         reports = reports_1 | reports_2
         return reports
     
@@ -155,3 +159,15 @@ def report_cmplt(request,rep_id):
     else:
         return redirect('index')
 
+class CreateUserRating(ListView):
+    model = UserRating
+    template_name = 'new_site/diashboards.html'
+
+    def my_view(request):
+        model = UserRating.objects.get(pk=1)
+        data = json.dumps({
+            "all_rating" : UserRating.all_rating,
+            "count_raiting" : UserRating.count_raiting,
+            "rating" : UserRating.rating,
+        })
+        return JsonResponse(data, safe=False)

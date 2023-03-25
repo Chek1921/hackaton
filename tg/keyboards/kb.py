@@ -39,3 +39,12 @@ reportsReply = ReplyKeyboardMarkup(
 
 
 emptyKeyboard = ReplyKeyboardRemove()
+
+
+
+rate1 = InlineKeyboardButton(text='1/5', callback_data='rate1')
+rate2 = InlineKeyboardButton(text='2/5', callback_data='rate2')
+rate3 = InlineKeyboardButton(text='3/5', callback_data='rate3')
+rate4 = InlineKeyboardButton(text='4/5', callback_data='rate4')
+rate5 = InlineKeyboardButton(text='5/5', callback_data='rate5')
+ratingReply = InlineKeyboardMarkup().row(rate1, rate2, rate3, rate4, rate5)
