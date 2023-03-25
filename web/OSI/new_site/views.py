@@ -171,3 +171,7 @@ class CreateUserRating(ListView):
             "rating" : UserRating.rating,
         })
         return JsonResponse(data, safe=False)
+    
+    def my_call(request):
+        if request.method == 'POST':
+            width = int(request.Post.get())
