@@ -1,0 +1,21 @@
+{%extends 'page.html'%}
+
+{%block content%}
+
+<div class="container">
+    <div class="container p-3 my-3 bg-secondary text-white" style="border-radius: 5px;  ">
+        <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <div class="form-group">
+                <label for="report_name">Новая работа</label>
+                {{ form.as_p }} 
+            </div>
+            <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-dark">Создать</button>
+            </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{%endblock content%}

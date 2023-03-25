@@ -1,0 +1,16 @@
+{% extends 'page.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container bg_form"> 
+    <h2>Sign Page</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class = "d-flex bg_regdiv">
+            <button type="submit" class = 'btn btn-success'>Register</button>
+            <a href="{% url 'index' %}" class="btn btn-primary bg_regbut2">Home</a>
+        </div>
+        
+    </form>
+</div>
+{% endblock content %}
