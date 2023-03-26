@@ -22,7 +22,20 @@ class UserRating(models.Model):
 
     def __str__(self):
         return self.user.username
-      
+    
+class Address(models.Model):
+    name = models.CharField('Название', max_length=150, null = False, blank=False)
+    residents_count = models.PositiveIntegerField('Количество жильцов')
+    payrate = models.PositiveIntegerField('Тариф адреса')
+    money = models.PositiveIntegerField('Деньги с адреса', blank=True, null=True)
+    
+    def save(self, *args, **kwargs):
+        self.money = self.residents_count * self.payrate
+        super(Address, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
 class CustomUserManager(BaseUserManager):
     
     def create_user(self, username, password, **extra_fields):
@@ -30,11 +43,7 @@ class CustomUserManager(BaseUserManager):
         user = self.model(username = username, **extra_fields)
         user.set_password(password)
         user.save()
-        user_rating = UserRating(
-            all_rating = 0,
-            count_raiting = 0,
-        )
-        user_rating.save()
+        print(user)
 
         return user
 
@@ -56,6 +65,18 @@ class CustomUser(AbstractUser):
     allows = models.CharField("Разрешение", max_length=1, null=False, blank=False, default='1')
     email = models.EmailField("Почта",null=False, blank=False, unique=True)
     work_type = models.ForeignKey("WorkType", on_delete=models.CASCADE, default = 1)
+
+    def save(self, *args, **kwargs):
+        super(CustomUser, self).save(*args, **kwargs)
+        if UserRating.objects.filter(user = self):
+            pass
+        else:
+            user_rating = UserRating(
+                user = self,
+                all_rating = 0,
+                count_raiting = 0,
+            )
+            user_rating.save()
 
     objects = CustomUserManager()
     REQUIRED_FIELDS = []
@@ -90,7 +111,7 @@ class Report(models.Model):
     stage = models.ForeignKey('Stage', on_delete=models.CASCADE, default= 1)
     address = models.CharField('Адрес', max_length=150, null = False, blank=False)
     whos = models.ForeignKey('CustomUser', on_delete=models.CASCADE, blank=True, null = True)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     photo = models.ImageField(upload_to="photos/%Y/%m/%d/", blank=True, null = True)
     cost = models.PositiveIntegerField('Стоимость услуги', blank=True, null = True)
 
@@ -117,13 +138,13 @@ class Report(models.Model):
         #         print(using_description)
 
         if self.stage_id == 2:
-            using_description = f'Ваша жалоба: \n{self.message}\n\n Находится в состоянии: {self.stage}'
+            using_description = f'Ваша жалоба: \n{self.message}\n\n Находится в состоянии: {self.stage} \n Стоимость услуги: {self.cost} тг.'
             rate = False
         elif self.stage_id == 3:
-            using_description = f'Ваша жалоба: \n{self.message}\n\n Была взята: {self.whos.username}'
+            using_description = f'Ваша жалоба: \n{self.message}\n\n Была взята: {self.whos.first_name}'
             rate = False
         elif self.stage_id == 4:
-            using_description = f'Ваша жалоба: \n{self.message}\n\n Была выполнена: {self.whos.username}, \n Дата выполнения: {now}'
+            using_description = f'Ваша жалоба: \n{self.message}\n\n Была выполнена: {self.whos.first_name}, \n Дата выполнения: {now}'
             rate = True
 
         notification = {

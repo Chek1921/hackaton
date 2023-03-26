@@ -1,13 +1,71 @@
-{%extends 'page.html'%}
+{% extends 'page.html' %}
 {% load crispy_forms_tags %}
-{%block content%}
-    <h2>Login Page</h2>
+{% load static %}
+
+<!-- 
+    <h2>Вход</h2>
+	
 	<form method="post">
 	  	{% csrf_token %}
 		{{ form|crispy }}
         <button type="submit" class = 'btn btn-primary'>Login</button>
-        <br><br>
-        <a href="{% url 'index' %}">Home</a>
-	</form>
+	</form> -->
+
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block title %} 
+    Вход
+{% endblock %}
+
+{% block content %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="circle">
+        <div class="register-form-container">
+            <h1 class="form-title">
+                Вход
+            </h1>
+            <div class="form-fields">
+                <!-- <div class="form-field">
+                    <input name="username" type="text" placeholder="Введите логин">
+                </div>
+                <div class="form-field">
+                    <input id="password-input" name="password" type="password" required placeholder="Введите пароль">
+                    <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
+                </div> -->
+				{{ form|crispy }}
+            </div>
+            
+            <div class="error_text">
+                {% for message in messages %}
+                    <h5>{{ message }}</h5>
+                {% endfor %}
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" class="button">
+                    Войти
+                </button>
+                <!-- <div class="forgot_password">
+                    <a href="reset_password" class="forgot_pass">Забыли пароль?</a>
+                </div> -->
+            </div>
+            
+            <div class="no_member">
+                <p class="text_base">Вы не зарегистрированы? <a href="{%url 'reg'%}"> Регистрация</a></p>
+            </div>
+        </div>    
+    </div>
+</form>
+
+{% endblock %}
+
+{% block js_script %}
+<script src="{% static 'js/login.js' %}"></script>
+<script src="https://kit.fontawesome.com/41d56fde30.js" crossorigin="anonymous"></script>
+{% endblock %}
+
 </div>
-{%endblock content%}

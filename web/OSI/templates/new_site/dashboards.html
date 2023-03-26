@@ -1,57 +1,217 @@
 {%extends 'page.html'%}
+{% load static %}
+
+{% block css_additional %}
+	<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
 
 {% block content %}
-<div id="chartContainer" style="height: 300px; width: 100%;"></div>
-	<div class="container">
-		<label>
-			{{user}} ,вот ваш рейтинг
-		</label>
+<div class="container">
+	<div class="row canvas__margin">
+		<div class="col-6">
+			<div id="chartContainer1" style="width: 100%;"></div>
+		</div>
+		<div class="col-6">
+			<div id="chartContainer2" style="width: 100%;"></div>
+		</div>
+		<div class="col-12 canvas__margin_3">
+			<div id="chartContainer3" style="width: 100%;"></div>
+		</div>
 	</div>
+</div>
+
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript"> 
-            window.onload = function () {
-                var chart = new CanvasJS.Chart("chartContainer", {
-	            animationEnabled: true,
-	            exportEnabled: true,
-                theme:"light1",
-	            title:{
-		            text: "Simple Column Chart with Index Labels"
-	            },
-  	            axisY: {
-                includeZero: true
-                },
-	            data: [{
-		        type: "column", //change type to bar, line, area, pie, etc
-		        //indexLabel: "{y}", //Shows y value on all Data Points
-		        indexLabelFontColor: "#03c03c",
-      	        indexLabelFontSize: 16,
-		        indexLabelPlacement: "outside",
-		        dataPoints: [
-			        { x: 10, y: 70 },
-			        { x: 20, y: 55 },
-			        { x: 30, y: 50 },
-			        { x: 40, y: 65 },
-			        { x: 50, y: 92, indexLabel: "\u2605 Высшее" },
-			        { x: 60, y: 68 },
-			        { x: 70, y: 38 },
-			        { x: 80, y: 71 },
-			        { x: 90, y: 54 },
-			        { x: 100, y: 60 },
-			        { x: 110, y: 36 },
-			        { x: 120, y: 49 },
-			        { x: 130, y: 21, indexLabel: "\u2691 Низжшее" }
-		        ]
-	        }]
-        });
-		$.ajax({
-		url: '/my_view/',
-		success:function (data){
-			var UserRating = JSON.parse(data);
-		}
-			});
-            chart.render();
+            $(document).ready( function () {
+				var rating = [];
+				$.ajax({
+					url: '/api/dashboard',
+					type: 'get',
+					success: function (data){
+						
+						data.forEach(element => {
+							
+							rating.push({
+								y: element.rating,
+								label: element.user,
+							})
+						});
+						var chart = new CanvasJS.Chart("chartContainer1", {
+							animationEnabled: true,
 
-                                    }
+							title:{
+								text:"Рейтинг пользователей"
+							},
+							axisX:{
+								interval: 1
+							},
+							axisY2:{
+								interlacedColor: "rgba(1,77,101,.2)",
+								gridColor: "rgba(1,77,101,.1)",
+							},
+							data: [{
+								type: "bar",
+								name: "companies",
+								axisYType: "secondary",
+								color: "#014D65",
+								dataPoints: rating
+							}]
+						});
+						chart.render();
+					}
+				});
+				var count_per_day = []
+				$.ajax({
+					url: '/api/dashboard/2',
+					type: 'get',
+					success: function (data){
+						
+						data.forEach(element => {
+							var dmy = element.day.split('-');
+							count_per_day.push({
+								
+								y: parseInt(element.available),
+
+								x: new Date(parseInt(dmy[0]), parseInt(dmy[1]-1), parseInt(dmy[2]))
+							})
+							
+						});
+						var chart2 = new CanvasJS.Chart("chartContainer2",
+							{
+							title:{
+								text: "Количество жалоб в день"
+							},
+							axisX:{
+								title: "Даты",
+								gridThickness: 2
+							},
+							axisY: {
+								title: "Количество жалоб"
+							},
+							data: [
+							{
+								type: "area",
+								dataPoints: count_per_day
+							}
+							]
+						});
+						chart2.render();
+					}
+				});
+				money_come = []
+				money_go = []
+				$.ajax({
+					url: '/api/dashboard/3',
+					type: 'get',
+					success: function (data){
+						debugger
+						data.address_list.forEach((element, index) => {
+							money_come.push(
+								{'label': element, 'y': parseInt(data.money_come_list[index])}
+							)
+							money_go.push(
+								{'label': element, 'y': parseInt(data.money_go_list[index])}
+							)
+							
+						});
+						var chart3 = new CanvasJS.Chart("chartContainer3", {
+							exportEnabled: true,
+							animationEnabled: true,
+							title:{
+								text: "Деньги"
+							},
+							subtitles: [{
+								text: "Количество оплаты и количество денег потраченных"
+							}], 
+							axisX: {
+								title: "Адреса"
+							},
+							axisY: {
+								title: "Полученные деньги - Тенге",
+								titleFontColor: "#4F81BC",
+								lineColor: "#4F81BC",
+								labelFontColor: "#4F81BC",
+								tickColor: "#4F81BC",
+								includeZero: true
+							},
+							axisY2: {
+								title: "Потраченные деньги - Тенге",
+								titleFontColor: "#C0504E",
+								lineColor: "#C0504E",
+								labelFontColor: "#C0504E",
+								tickColor: "#C0504E",
+								includeZero: true
+							},
+							toolTip: {
+								shared: true
+							},
+							legend: {
+								cursor: "pointer",
+								itemclick: toggleDataSeries
+							},
+							data: [{
+								type: "column",
+								name: "Полученные деньги",
+								showInLegend: true,      
+								yValueFormatString: "#,##0.# Units",
+								dataPoints: money_come
+							},
+							{
+								type: "column",
+								name: "Потраченные деньги",
+								axisYType: "secondary",
+								showInLegend: true,
+								yValueFormatString: "#,##0.# Units",
+								dataPoints: money_go
+							}]
+						});
+						chart3.render();
+						function toggleDataSeries(e) {
+							if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+								e.dataSeries.visible = false;
+							} else {
+								e.dataSeries.visible = true;
+							}
+							e.chart.render();
+						}
+					}
+				});
+			});
+			
+
+	// var chart = new CanvasJS.Chart("chartContainer", {
+	// 				animationEnabled: true,
+	// 				exportEnabled: true,
+	// 				theme:"light1",
+	// 				title:{
+	// 					text: "Simple Column Chart with Index Labels"
+	// 				},
+	// 				axisY: {
+	// 				includeZero: true
+	// 				},
+	// 				data: [{
+	// 					type: "column", //change type to bar, line, area, pie, etc
+	// 					//indexLabel: "{y}", //Shows y value on all Data Points
+	// 					indexLabelFontColor: "#03c03c",
+	// 					indexLabelFontSize: 16,
+	// 					indexLabelPlacement: "outside",
+	// 					dataPoints: rating
+						
+	//         		}]
+    //     		});
+	// { x: 20, y: 55 },
+	// { x: 30, y: 50 },
+	// { x: 40, y: 65 },
+	// { x: 50, y: 92, indexLabel: "\u2605 Высшее" },
+	// { x: 60, y: 68 },
+	// { x: 70, y: 38 },
+	// { x: 80, y: 71 },
+	// { x: 90, y: 54 },
+	// { x: 100, y: 60 },
+	// { x: 110, y: 36 },
+	// { x: 120, y: 49 },
+	// { x: 130, y: 21, indexLabel: "\u2691 Низжшее" }
     </script>
+
 
 {% endblock content %}

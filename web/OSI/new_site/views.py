@@ -11,8 +11,12 @@ from .consumers import YourConsumer
 from django.http import JsonResponse
 import json
 
+from django.db.models.functions import TruncDay
+from django.db.models import Count
+
 # Create your views here.
 def dashboards(request):
+    print()
     return render(request, 'new_site/dashboards.html', {'title':'Мой Рейтинг'})
 
 def index(request):
@@ -72,7 +76,24 @@ class ReportStage1(LoginRequiredMixin,ListView):
             report = Report.objects.get(pk = form_data['el_pk'])
             report.time_factor = TimeFactor.objects.get(pk = form_data['time_factor'])
             report.work_type = WorkType.objects.get(pk = form_data['work_type'])
-            report.cost = form_data['cost']
+            if form_data['cost'] != '':
+                report.cost = form_data['cost']
+            addresses = Address.objects.all()
+            check = True
+            for address in addresses:
+                if report.address == address.name:
+                    check = False
+            if check:
+                address = Address(
+                    name = report.address,
+                    residents_count = 1,
+                    payrate = 4000,
+                )
+                address.save()
+            else:
+                address = Address.objects.get(name = report.address)
+                address.residents_count = address.residents_count + 1
+                address.save()
             report.stage = Stage.objects.get(id = 2)
             report.save()
             return redirect('rep1')
@@ -140,6 +161,14 @@ def user_add(request, user_pk):
     user.save()
     return redirect('user_list')
     
+def report_del(request,rep_id):
+    if request.user.allows == '3':
+        report = Report.objects.get(pk = rep_id)
+        report.delete()
+        return redirect('rep1')
+    else:
+        return redirect('index')
+
 def report_to_me(request,rep_id):
     if request.user.allows == '2':
         report = Report.objects.get(id = rep_id)
@@ -160,18 +189,18 @@ def report_cmplt(request,rep_id):
         return redirect('index')
 
 
-# def my_request(request):
-#     model = UserRating.objects.get(pk=1)
-#     data = json.dumps({
-#         "all_rating" : UserRating.all_rating,
-#         "count_raiting" : UserRating.count_raiting,
-#         "rating" : UserRating.rating,
-#     })
-#     return JsonResponse(data, safe=False)
+def my_request(request):
+    model = UserRating.objects.get(pk=1)
+    data = json.dumps({
+        "all_rating" : UserRating.all_rating,
+        "count_raiting" : UserRating.count_raiting,
+        "rating" : UserRating.rating,
+    })
+    return JsonResponse(data, safe=False)
 
-# def my_call(request):
-#     if request.method == 'POST':
-#         width = int(request.Post.get('width', 400))
-#         height = int(request.POST.get('height', 300))
-#         color = request.POST.get('color', 'red')
-#         image 
+def my_call(request):
+    if request.method == 'POST':
+        width = int(request.Post.get('width', 400))
+        height = int(request.POST.get('height', 300))
+        color = request.POST.get('color', 'red')
+        image 

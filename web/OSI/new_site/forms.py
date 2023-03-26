@@ -3,12 +3,13 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm
 
 class RegForm(UserCreationForm):
-    email = forms.EmailField(max_length=254, help_text='Enter a valid email address')
+    email = forms.EmailField(max_length=254, help_text='Введите правильный email')
 
     class Meta:
         model = CustomUser
         fields = [
             'username',
+            'first_name',
             'email', 
             'work_type',
             'password1', 

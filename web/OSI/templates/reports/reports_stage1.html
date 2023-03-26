@@ -1,8 +1,10 @@
 {% extends 'page.html' %}
+{% load static %}
 
-{% block content %} 
-<div class="container">
-    <h1>Жалобы</h1>
+{% comment %}
+{% block content %}  
+ <!-- <div class="container">
+    <h1 class="title__rep">Жалобы</h1>
     
     {% for el in reports %} 
     
@@ -49,5 +51,85 @@
             {%endfor%}
         </ul>
     </nav>
-</div>
-{%endblock content%}
+</div> -->
+{% endcomment %}
+
+
+
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'css/reports_stage1.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="rep1__block">
+        <div class="container">
+            <h1 class="rep1__title">Жалобы</h1>
+            
+            {% for el in reports %} 
+            
+            <form action="" method="post" class = 'form'>{%csrf_token%}
+
+                <div class="alert" role="alert">
+
+                    <h4 class="alert__title">Адрес: {{ el.address }}</h4>
+
+                    <p class="alert__about">Содержание: {{ el.message|linebreaks }}</p>
+
+                    <p class="alert__data">Время создания: {{ el.date }}</p>
+
+                    <input type="text" name="el_pk" id="" class = 'd-none' value = '{{el.pk}}'>
+
+                    
+                    <div>
+
+                        <label for="">Выбор работы</label>
+
+                        <select name="work_type" id="" class = 'form-control'>
+                            {%for work in work_types%}
+                            <option value="{{work.pk}}">{{work.name}}</option> 
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div>
+
+                    <label for="">Выбор приоритета</label>
+
+                    <select name="time_factor" id="" class = 'form-control'>
+                        {%for time in time_factors%}
+                        <option value="{{time.pk}}">{{time.name}}</option> 
+                        {%endfor%}
+                    </select>
+
+                    <label for="">Цена</label>
+
+                    <input type="number" name = 'cost' class = 'form-control'>
+                    </div>
+
+                    <div class="btn-processing">
+                        <button type="submit" class = 'btn' onclick="alert('Вы точно хотите обработать?')">Обработать</button>
+                        <a class = 'btn ml-3' href="{%url 'rep_del' el.pk%}">Удалить</a>
+                    </div>
+                </div>
+
+            </form>
+
+            {% endfor %}
+            <nav>
+                <ul class="pagination">
+                    {% for p in paginator.page_range %}
+                    {% if page_obj.number == p %}
+                    <li class = 'page-item disabled'><a class="page-link" href="#" tabindex="-1">{{ p }}</a></li>
+                    {%elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                    </li>
+                    {%endif%}
+                    {%endfor%}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+{% endblock content %}

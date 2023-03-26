@@ -6,8 +6,22 @@ class ReportSerializer(serializers.ModelSerializer):
         model = Report
         fields = '__all__'
 
-class RatingSerializer(serializers.Serializer):
-    rating = serializers.CharField()
-    reportId = serializers.CharField()
+class ReportPerDaySerializer(serializers.Serializer):
+    day = serializers.CharField()
+    available = serializers.CharField()
 
+class MoneySerializer(serializers.Serializer):
+    address = serializers.CharField()
+    money_come = serializers.CharField()
+    money_go = serializers.CharField()
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+class UserRatingSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source = "user.username")
+    class Meta:
+        model = UserRating
+        fields = "__all__"

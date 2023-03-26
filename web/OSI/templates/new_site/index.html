@@ -1,7 +1,282 @@
-{%extends 'page.html'%}
+{%extends 'page.html' %}
+{% load static %}
 
 {%block content%}
+<header class="header">
+    <div class="info_block">
+        <div class="container">
+            <div class="block">
+                <div class="left__block">
+                    <div class="left__title">
+                        <h1>House Scare</h1>
+                    </div>
+        
+                    <div class="left__descr">
+                        <p>Компания House Scare, позволит вам оптимизировать процессы управления ЖКХ и с легкостью решать проблемы.</p>
+                    </div>
+                    <div class="button__block">
+                        <a href="#">Связаться с нами!</a>
+                    </div>
 
-    <h1>ГЛАВНАЯ СТРАНИЦА</h1>
+                </div>
 
+                <div class="right__block">
+                    <img class="right__img" src="{% static 'img/main_bg.jpg' %}" alt="">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<main id="about">
+    <div  class="about__us">
+        <div class="container">
+            <div class="about__block">
+                <div class="about__title">О Нас</div>
+                <div class="about__descr">
+                    <p class="main__p">
+                        <p class="p_one">Добро пожаловать в нашу компанию House Scare</p>
+                        <p class="p_two">Мы занимаемся предоставлением исключительных услуг по управлению и поддержке жилых сообществ, а также стремимся к созданию процветающих сообществ, которые наши члены с гордостью называют своим домом.</p>
+                        <p class="p_three">Наша компания состоит из опытных профессионалов, которые являются экспертами в области управления и эксплуатации товариществ собственников жилья. Мы понимаем проблемы, с которыми сталкиваются ТСЖ, и тесно сотрудничаем с нашими клиентами для разработки индивидуальных решений, отвечающих их уникальным потребностям. Наша команда стремится обеспечить высочайший уровень обслуживания и поддержки наших клиентов и их сообществ.</p>
+                        <p class="p_four">Одна из наших основных целей - помочь нашим клиентам создать сильное чувство общности в их жилых районах. Мы понимаем, что сильная община является залогом высокого качества жизни, и тесно сотрудничаем с нашими клиентами для создания позитивных отношений между жителями. Мы также предлагаем ряд мероприятий и событий, направленных на развитие сообщества, чтобы помочь нашим клиентам создать процветающее сообщество.</p>
+                        
+                        
+                        <p class="p_five hidden">В нашей компании ТСЖ мы гордимся своей приверженностью к прозрачности и коммуникации. Мы понимаем, что эффективная коммуникация необходима для успеха любого сообщества, и мы тесно сотрудничаем с нашими клиентами, чтобы все члены сообщества были хорошо информированы и имели право голоса в процессе принятия решений. Мы также предоставляем регулярные обновления и отчеты нашим клиентам, чтобы держать их в курсе состояния их сообщества.</p>
+                    </p>
+                    <div class="read__btn">
+                        <button class="read_more">Читать далее</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="services" class="services">
+        <div class="container">
+                <div class="services__title _anim-items _anim-no-hide">
+                    Наши Услуги
+                </div>
+
+                    <div class="services__flex">
+                        <div class="services__items _anim-items _anim-no-hide">
+                            <div class="services__icon">
+                                <img class="services__img" src="{% static 'img/recyle.svg' %}" alt="">
+                            </div>
+                             <div class="services__item_title">
+                                <h2>Коммунальные услуги</h2>
+                            </div>
+                        </div>
+                        <div class="services__descr _anim-items _anim-no-hide">
+                            <p>
+                                Обеспечение непрерывного предоставления нашим жителям необходимых услуг в их домах.
+                            </p>
+                        </div>
+                    </div> 
+
+                    <div class="services__flex general_margin">
+                        <div class="services__descr margin_descr _anim-items _anim-no-hide">
+                            <p>
+                                Предоставление услуг по обеспечению безопасности, (закрытый въезд, патрулирование и системы наблюдения)
+                            </p>
+                        </div>
+                        <div class="services__items left_shadow services_border _anim-items _anim-no-hide">
+                            <div class="services__icon">
+                                <img class="services__img" src="{% static 'img/secure.svg' %}" alt="">
+                            </div>
+                             <div class="services__item_title">
+                                <h2>Безопасность</h2>
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div class="services__flex">
+                        <div class="services__items _anim-items _anim-no-hide">
+                            <div class="services__icon">
+                                <img class="services__img" src="{% static 'img/home.svg' %}" alt="">
+                            </div>
+                             <div class="services__item_title">
+                                <h2>Общественные мероприятия и деятельность</h2>
+                            </div>
+                        </div>
+                        <div class="services__descr _anim-items _anim-no-hide">
+                            <p>
+                                Организация общественных мероприятий и событий, (праздничные вечеринки, пикники и субботники).
+                            </p>
+                        </div>
+                    </div> 
+
+                    <div class="services__flex general_margin">
+                        <div class="services__descr margin_descr _anim-items _anim-no-hide">
+                            <p>
+                                Отвечаем за содержание общих зон и удобств сообщества, (парки, бассейны, клубные дома и дороги). 
+                            </p>
+                        </div>
+                        <div class="services__items left_shadow services_border _anim-items _anim-no-hide">
+                            <div class="services__icon">
+                                <img class="services__img" src="{% static 'img/screw.svg' %}" alt="">
+                            </div>
+                             <div class="services__item_title">
+                                <h2>Техническое обслуживание и ремонт</h2>
+                            </div>
+                        </div>
+                    </div> 
+        </div>
+    </div>
+
+    <section id="benefits" class="accordion__section">
+        <div class="container">
+            <div class="accordion">
+                <h2 class="accordion__title">Наши преимущества</h2>
+                
+                <div class="benefits">
+                    <div class="header__title">
+                        <h3>Профессиональная экспертиза</h3>
+                        <img class="arrow_icon" src="{% static 'img/arrow_down.svg' %}" alt="">
+                    </div>
+                    <div class="header__descr">
+                        <p>
+                            Наша команда имеет большой опыт 
+                            в управлении и обслуживании сообществ, 
+                            предоставляя ценные знания в юридических 
+                            вопросах, составлении бюджета и других 
+                            важных задачах
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefits">
+                    <div class="header__title">
+                        <h3>Соблюдение правил</h3>
+                        <img class="arrow_icon" src="{% static 'img/arrow_down.svg' %}" alt="">
+                    </div>
+                    <div class="header__descr">
+                        <p>
+                            Наша компания следит за соблюдением 
+                            правил и норм сообщества, обеспечивая 
+                            их выполнение всеми жильцами для 
+                            поддержания гармоничной среды проживания. 
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefits">
+                    <div class="header__title">
+                        <h3>Соблюдение законов</h3>
+                        <img class="arrow_icon" src="{% static 'img/arrow_down.svg' %}" alt="">
+                    </div>
+                    <div class="header__descr">
+                        <p>
+                            Мы всегда в курсе всех юридических требований. 
+                            Наша команда регулярно общается с жителями, 
+                            чтобы держать их в курсе новостей и событий района
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefits">
+                    <div class="header__title">
+                        <h3>Техническая поддержка</h3>
+                        <img class="arrow_icon" src="{% static 'img/arrow_down.svg' %}" alt="">
+                    </div>
+                    <div class="header__descr">
+                        <p>
+                            Наша команда работает непрерывно, 
+                            и всегда рада помочь своим пользователям 
+                            решить проблему
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefits">
+                    <div class="header__title">
+                        <h3>Управление финансами</h3>
+                        <img class="arrow_icon" src="{% static 'img/arrow_down.svg' %}" alt="">
+                    </div>
+                    <div class="header__descr">
+                        <p>    
+                            Наша команда следит за тем, чтобы все
+                            финансовые документы были точными, 
+                            прозрачными и велись добросовестно.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefits">
+                    <div class="header__title">
+                        <h3>Экономия времени</h3>
+                        <img class="arrow_icon" src="{% static 'img/arrow_down.svg' %}" alt="">
+                    </div>
+                    <div class="header__descr">
+                        <p>    
+                            Поручив многие повседневные задачи нам,
+                            члены правления могут сосредоточиться на
+                            других своих обязанностях, зная, что ваша
+                            ассоциация находится в надежных руках.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section id="contact" >
+
+    <section class="contact__us">
+        <div class="container">
+            <h1>Наши контакты</h1>
+            <div class="contact__subtitle">
+                <p>Выберите для себя удобный способ связаться с нами!</p>
+           </div>
+            <div class="contact__block">
+                <div class="contact__items">
+                    <div class="contact__title phone">Наши телефоны</div>
+                    <div class="contact__descr">
+                        <p>+7(700)-400-31-30</p>
+                        <p>+7(707)-400-31-30</p>
+                    </div>
+                </div>
+                <div class="contact__items">
+                    <div class="contact__title addresses">Наши Адреса</div>
+                    <div class="contact__descr">
+                        <p>г.Астана. Проспект Абая, дом 201</p>
+                        <p>г.Алмата. Улица Жандосова, дом 69/1</p>
+                    </div>
+                </div>
+                <div class="contact__items">
+                    <div class="contact__title work__time">График работы</div>
+                    <div class="contact__descr">
+                        <p>ПН-ПТ: 10:00-20:00</p>
+                        <p>СБ-ВС: 10:00-13:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>
+<footer class="footer">
+    <div class="container">
+        <div class="footer__block">
+            <ul class="footer__items">
+                <li class="footer__item"><a href="#main">Главная</a></li>
+                <li class="footer__item"><a href="#about">О Нас</a></li>
+                <li class="footer__item"><a href="#services">Наши услуги</a></li>
+                <li class="footer__item"><a href="#benefits">Преимущества</a></li>
+                <li class="footer__item"><a href="#contact">Контакты</a></li>
+            </ul>
+            
+            <div class="footer__socials">
+                <ul>
+                    <li><a href="#"><img class="socials_icons" src="{% static 'img/twitter.svg' %}" alt=""></a></li>
+                    <li><a href="#"><img class="socials_icons" src="{% static 'img/instagram.svg' %}" alt=""></a></li>
+                    <li><a href="#"><img class="socials_icons" src="{% static 'img/facebook.svg' %}" alt=""></a></li>
+                </ul>
+            </div>
+
+            <p class="copyright"><img class="copyright__img" src="{% static 'img/copyright.svg' %}" alt=""> 2023 House Scare</p>
+        </div>
+    </div>
+</footer>
+
+
+<script src="{% static 'js/index.js' %}"></script>
 {%endblock content%}

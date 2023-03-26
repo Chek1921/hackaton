@@ -19,20 +19,24 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', views.index, name = 'index'),
-    path('reg/', views.RegView.as_view(), name='reg'),
-    path('login/', views.LogView.as_view(), name='login'),
+    path('reg/', views.RegView.as_view(), name='reg'),                          #
+    path('login/', views.LogView.as_view(), name='login'),                      #
     path('logout/', views.logout_l, name='logout'),
     path('dashboards/', views.dashboards, name='dashboards'),
     path('work/create', views.CreateWorkType.as_view(), name = 'work_create'),
-    path('rep1', views.ReportStage1.as_view(), name = 'rep1'),
-    path('rep2', views.ReportStage2.as_view(), name = 'rep2'),
-    path('rep3', views.ReportStage3.as_view(), name = 'rep3'),
-    path('user/list', views.UserList.as_view(), name = 'user_list'),
-    path('user/add/<int:user_pk>', views.user_add, name = 'user_add'),
+    path('rep1', views.ReportStage1.as_view(), name = 'rep1'),                  #
+    path('rep2', views.ReportStage2.as_view(), name = 'rep2'),                  #
+    path('rep3', views.ReportStage3.as_view(), name = 'rep3'),                  #
+    path('user/list', views.UserList.as_view(), name = 'user_list'),            #
+    path('user/add/<int:user_pk>', views.user_add, name = 'user_add'),          #
+    path('rep/del/<int:rep_id>', views.report_del, name = 'rep_del'),
     path('rep/to_me/<int:rep_id>', views.report_to_me, name = 'rep_to_me'),
     path('rep/cmplt/<int:rep_id>', views.report_cmplt, name = 'rep_cmplt'),
 
 
     path('api/telegram/message/get', api_views.ReportApiList.as_view()),
     path('api/telegram/rating/', api_views.RatingApi.as_view()),
+    path('api/dashboard', api_views.UserRatingApiList.as_view()),
+    path('api/dashboard/2', api_views.ReportApi.as_view()),
+    path('api/dashboard/3', api_views.MoneyApi.as_view()),
 ]   

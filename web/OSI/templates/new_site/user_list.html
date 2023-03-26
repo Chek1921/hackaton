@@ -1,18 +1,33 @@
 {% extends 'page.html' %}
+{% load static %}
+
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'css/reports_stage2.css'%}">
+{% endblock %}
 
 {% block content %} 
+
 <div class="container">
-    <h1>Пользователи</h1>
+
+    <h1 class="user__title">Пользователи</h1>
+
     {% for el in users %} 
-        <div class="row">
+        <div class="row row__center">
+
             <div class="col">
-                <div class="alert bg-warning" role="alert">
+
+                <div class="alert danger_bg" role="alert">
+
                     <h4 class="alert-heading">{{ el.username }}</h4>
-                    <p>{{ el.email }}</p>
-                    <p>{{ el.work_type }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="{% url 'user_add' el.pk %}" class = 'btn btn-primary'>Изменить</a>
+
+                    <p class="alert__email">{{ el.email }}</p>
+
+                    <p class="alert__worktype">{{ el.work_type }}</p>
+
+                    <div class="create__link">
+                        <a href="{% url 'user_add' el.pk %}" class = 'create__btn'>Изменить</a>
                     </div>
+               
                 </div>
             </div>
         </div>

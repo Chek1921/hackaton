@@ -10,8 +10,9 @@ class AdressStates(StatesGroup):
 class UserStates(StatesGroup):
     adress_state = State()
     problem_state = State()
-    third_state = State()
-    fourth_state = State()
+    photo_state = State()
+
+
 
 
 

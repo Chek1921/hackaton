@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+@font-face {
+    font-family: Gilroy;
+    src: url(fonts/Gilroy/Gilroy-Light.otf);
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Gilroy;
+    src: url(fonts/Gilroy/Gilroy-ExtraBold.otf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: Intro;
+    src: url(fonts/Intro/IntroDemoCond-LightCAPS.otf);
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Intro;
+    src: url(fonts/Intro/IntroDemoCond-BlackCAPS.otf);
+    font-weight: bold;
+}
+
+
+/* Обнуление */
+*{
+	padding: 0;
+	margin: 0;
+	border: 0;
+    scroll-behavior: smooth !important;
+}
+*,*:before,*:after{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+:focus,:active {
+    outline: none;
+}
+a:focus,a:active {
+    outline: none;
+}
+
+nav,footer,header,aside{
+    display: block;
+}
+
+html,body{
+	height: 100%;
+	width: 100%;
+	font-size: 100%;
+	line-height: 1;
+	font-size: 14px;
+	-ms-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+input, button, textarea {
+    font-family:inherit;
+}
+
+input::-ms-clear {
+    display: none;
+}
+button {
+    cursor: pointer;
+}
+button::-moz-focus-inner {
+    padding:0;
+    border:0;
+}
+a, a:visited {
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+ul li {
+    list-style: none;
+}
+img {
+    vertical-align: top;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-size:inherit;
+    font-weight: 400;
+}
+/*  ----------------   */
+
+body {
+    font-family: Gilroy;
+
+}
+
+p {
+    color: black;
+}
+
+.warning_bg {
+    background: #d80d0dcd;
+    border-radius: 30px;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    padding: 20px;
+}
+
+.danger_bg {
+    background: rgb(255, 213, 2);
+    border-radius: 30px;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    padding: 20px;
+}
+
+.user__title {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.row__center {
+    text-align: center;
+    padding: 0.75rem 1.25rem;
+    margin: 0 auto;
+    max-width: 50%;
+    max-height: 50%;
+}
+
+.create__link {
+    text-align: center;
+    background: #000000;
+    display: inline-block;
+    padding: 10px 30px;
+    border-radius: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.warning_btn {
+    align-items: center;
+}
+
+.create__link:hover{
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.create__btn {
+    color: #ffffff;
+}
+
+.create__btn:hover{
+    color: #ffffff;
+}
+
+.alert-heading {
+    font-size: 20px;
+}
+
+.alert-heading::first-letter {
+    text-transform: uppercase;
+}
+
+.alert__email {
+    font-family: Intro;
+    font-size: 20px;
+    font-weight: 700;
+} 
+
+.alert__worktype {
+    font-family: Gilroy;
+    font-size: 20px;
+}
+
+.font_block {
+    font-size: 20px;
+}
+
+.green_bg {
+    background: #1fbe03;
+    border-radius: 20px;
+}

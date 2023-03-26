@@ -1,12 +1,13 @@
 import requests
 from geopy.geocoders import Nominatim
 import json
-
+import os
 
 
 
 url = 'http://26.76.95.107:8000/api/telegram/message/get'
 rating_url = 'http://26.76.95.107:8000/api/telegram/rating/'
+photo_url = 'http://26.76.95.107:8000/'
 
 def get_locations(latitude, longitude, userid):
     geolocator = Nominatim(user_agent="5562707@mail.ru")
@@ -81,3 +82,11 @@ def post_rating(res, id):
         'reportId':id
     }
     return requests.post(rating_url, json=data)
+
+
+def send_photo_to_django(bytes_data, filename):
+    name, ext = os.path.splitext(filename)
+
+    data = {'photo': (name, bytes_data, f'image/{ext[1:]}')}
+
+    return requests.post(photo_url, files=data)

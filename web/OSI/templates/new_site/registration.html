@@ -1,16 +1,73 @@
 {% extends 'page.html' %}
 {% load crispy_forms_tags %}
-{% block content %}
-<div class="container bg_form"> 
+{% load static %}
+
+
+<!-- <div class="container bg_form"> 
     <h2>Sign Page</h2>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <div class = "d-flex bg_regdiv">
-            <button type="submit" class = 'btn btn-success'>Register</button>
-            <a href="{% url 'index' %}" class="btn btn-primary bg_regbut2">Home</a>
-        </div>
-        
+        <button type="submit" class = 'btn btn-success'>Register</button>
     </form>
-</div>
-{% endblock content %}
+</div> -->
+
+
+{% block css_additional %}
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+{% endblock %}
+
+{% block title %} 
+    Регистрация
+{% endblock %}
+
+{% block content %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="circle">
+        <div class="register-form-container">
+            <h1 class="form-title">
+                Регистрация
+            </h1>
+            <div class="form-fields">
+                <!-- <div class="form-field">
+                    {{ form.username }}
+                </div>
+                <div class="form-field">
+                    {{ form.email }}
+                </div>
+                <div class="form-field">
+                    {{ form.password1}}
+                </div>
+                <div class="form-field">
+                    {{ form.password2}}
+                </div> -->
+                {{ form|crispy }}
+            </div>
+            
+            <div class="error_text">
+                {% for message in messages %}
+                    <h5>{{ message }}</h5>
+                {% endfor %}
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" class="button">
+                    Регистрация
+                </button>
+            </div>
+            
+            <div class="no_member">
+                <p class="text_base">Уже зарегистрированы? <a href="{%url 'login'%}"> Войти</a></p>
+            </div>
+        </div>    
+    </div>
+</form>
+
+
+{% endblock %}
+
+{% block js_script %}
+<script src="{% static 'js/registration.js' %}"></script
+{% endblock %}

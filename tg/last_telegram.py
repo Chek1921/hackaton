@@ -13,7 +13,7 @@ import websockets
 
 from api import main_api
 from handlers import states
-from keyboards import beginBot, inputType, inlineChoice, emptyKeyboard, ratingReply
+from keyboards import beginBot, inputType, inlineChoice, emptyKeyboard
 
 
 TOKEN = "6220388571:AAHYi2TR5B4-EPH1Jw_f6VINoJBJAK6JQrY"

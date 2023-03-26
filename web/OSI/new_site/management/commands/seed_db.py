@@ -9,7 +9,7 @@ class Command(BaseCommand):
             return
         for work_type in work_types:
             work_type = WorkType(
-                work_type = work_type
+                name = work_type
             )
             work_type.save()
 
@@ -19,7 +19,7 @@ class Command(BaseCommand):
             return
         for stage in stages:
             stage = Stage(
-                stage = stage
+                name = stage
             )
             stage.save()
 
@@ -29,7 +29,7 @@ class Command(BaseCommand):
             return
         for time_factor in time_factors:
             time_factor = TimeFactor(
-                time_factor = time_factor
+                name = time_factor
             )
             time_factor.save()
 
