@@ -708,9 +708,9 @@ body {
 }
 
 
-@media (max-width: 390px) {
+@media (max-width: 510px) {
     .navbar {
-        height: 400px;
+        height: 200px;
     }
 
     .block {
@@ -718,5 +718,11 @@ body {
     }
     .contact__us {
         display: none;
+    }
+    .nav_sections {
+        flex-direction: column;
+    }
+    .info_block {
+        height: 400px;
     }
 }

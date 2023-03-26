@@ -101,7 +101,7 @@ button {
     width: 100%;
     border: none;
     height: 35px;
-    background-color: #e07109;
+    background-color: #006c4e;
     border-radius: 50px;
     color: #ffffff;
     font-weight: bold;
@@ -111,15 +111,7 @@ button {
 
 
 .button:hover {
-    background-color: #db6b09;
-}
-
-.divider {
-    text-align: center;
-    margin: 15px 0;
-    font-weight: 500;
-    line-height: 14px;
-    color: #6b7481;
+    background-color: #01a677;
 }
 
 button a {
@@ -157,12 +149,12 @@ button a {
     text-decoration: none;
     font-weight: bold;
     font-size: 16px;
-    color: #db6b09;
+    color: #006c4e;
     transition: color .3s linear;
 }
 
 .text_base a:hover {
-    color: #ff993f;
+    color: #01a677;
 }
 
 .error_text h5{

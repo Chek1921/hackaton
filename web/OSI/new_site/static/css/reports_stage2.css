@@ -182,3 +182,42 @@ p {
     background: #1fbe03;
     border-radius: 20px;
 }
+
+.form-group {
+    background: #bdbdbd;
+    padding: 30px;
+    text-align: center;
+    margin-top: 30px;
+    border-radius: 30px;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.btn_work_link {
+    border:none;
+    padding: 10px 30px;
+    border-radius: 30px;
+}
+
+
+.form__title {
+    color: #ffffff;
+    font-family: Gilroy;
+    text-transform: uppercase;
+    font-size: 30px;
+    margin: 10px 0px;
+}
+
+@media (max-width: 510px) {
+    .row__center {
+        padding: 0;
+        margin: 0;
+        display: block;
+    }
+    .alert {
+        width: 250px;
+    }
+    .col {
+        display: block;
+        width: 500px;
+    }
+}
